@@ -8,9 +8,13 @@
     "@testing-library/user-event": "^7.1.2",
     "antd": "^4.0.1",
     "customize-cra": "^0.9.1",
+    "i": "^0.3.6",
+    "npm": "^6.14.2",
     "react": "^16.13.0",
     "react-app-rewired": "^2.1.5",
     "react-dom": "^16.13.0",
+    "react-loadable": "^5.5.0",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0"
   },
   "scripts": {

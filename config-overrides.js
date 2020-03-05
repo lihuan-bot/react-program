@@ -1,6 +1,6 @@
 // 基于customize和react-app-rewired的定制化配置文件
 
-const { override, addLessLoader, fixBabelImports } = require('customize-cra')
+const { override, addLessLoader, fixBabelImports, addDecoratorsLegacy } = require('customize-cra')
 
 const modifyVars = require('./thems')
 module.exports = override(
@@ -8,6 +8,7 @@ module.exports = override(
     javascriptEnabled: true,
     modifyVars
   }),
+  addDecoratorsLegacy(),
   fixBabelImports('import', {
     libraryName: 'antd',
     libraryDirectory: 'es',
