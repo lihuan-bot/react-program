@@ -22,6 +22,14 @@ service.interceptors.response.use(resp => {
   }
 })
 
-export const getArticles = () => {
-  return service.post('/api/v1/articleList')
+export const getArticles = (offset=0,limited=20) => {
+  return service.post('/api/v1/articleList',{
+    offset,
+    limited
+  })
+}
+export const deleteArtileById = id => {
+  return service.post('/api/v1/articleDelite',{
+    id
+  })
 }

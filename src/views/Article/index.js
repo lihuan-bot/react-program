@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import moment from 'moment'
-import { Card, Tag, Button, Table} from 'antd'
-import { getArticles } from '../../netWork'
+import XLSX from 'xlsx'
+import { Card, Tag, Button, Table, Modal, Typography, message} from 'antd'
+import { getArticles, deleteArtileById } from '../../netWork'
 const titleMap = {
   id:'id',
   title: '标题',
@@ -14,10 +15,16 @@ class Article extends Component {
   constructor(){
     super()
     this.state = {
-       dataSource : [],
+      dataSource : [],
       columns: [],
       total: 0 ,
-      isLoading:false
+      isLoading:false,
+      offset: 0,
+      limited: 20,
+      deleteArticleModalTitle: '',
+      isShowArticleModal:false,
+      deleteArticleConfirmLoading:false,
+      currentDeleteArtileId:null
     }
   }
   createColumns = columnsKeys => {
@@ -26,7 +33,7 @@ class Article extends Component {
         return {
           title:titleMap[item],
           key: item,
-          render(text, record){
+          render: record => {
             const {amount} = record
           return <Tag color={amount > 300 ? 'red' : 'green'}>{amount}</Tag>
           }
@@ -38,7 +45,6 @@ class Article extends Component {
           key: item,
           render(text, record){
             const { createAt } = record
-            console.log(createAt);
           return <Tag color='skyblue'> {moment(createAt).format('YYYY年MM月DD日 HH:mm:ss')} </Tag>
           }
         }
@@ -52,22 +58,30 @@ class Article extends Component {
     columns.push({
       title: '操作',
       key: 'actions',
-      render() {
-        return (
+      render: record =>
+           (
           <ButtonGroup>
-            <Button size="small" type="primary">编辑</Button>
-            <Button size="small" type="danger">删除</Button>
+            <Button size="small" type="primary" >编辑</Button>
+            <Button size="small" type="danger" onClick={() => this.showDeleteArticles(record)}>删除</Button>
           </ButtonGroup>
         )
-      }
+      
     })
     return columns
   }
-  componentDidMount() {
+  showDeleteArticles = (record) => {
+    this.setState({
+      isShowArticleModal:true,
+      deleteArticleModalTitle:record.title,
+      currentDeleteArtileId: record.id
+    })
+    
+  }
+  getData = () => {
     this.setState({
       isLoading: true
     })
-    getArticles().then(res => {
+    getArticles(this.state.offset,this.state.limited).then(res => {
       const columnsKeys = Object.keys(res.data.list[0])
       const columns = this.createColumns(columnsKeys)
       this.setState({
@@ -85,21 +99,108 @@ class Article extends Component {
     })
   }
   
+  componentDidMount() {
+    this.getData()
+  }
+    
+  onChangePage=(page,pageSize) => {
+    this.setState({
+      offset: pageSize * (page - 1),
+      limited: pageSize
+    },() => {
+     this.getData()
+    })
+  }
+  onShowSizeChange = (current, size) => {
+    this.setState({
+      offset:0,
+      limited:size
+    },() => {
+      this.getData()
+    })
+    
+  }
+  toExcel = () => {
+    const data = [Object.keys(this.state.dataSource[0])]
+    for (let item of this.state.dataSource) {
+      data.push([
+        item.id,
+        item.title,
+        item.author,
+        item.amount,
+        moment(item.createAt).format('YYYY年-MM月-DD日 HH:mm:ss')
+      ])
+      
+    }
+    const ws = XLSX.utils.aoa_to_sheet( data);
+		const wb = XLSX.utils.book_new();
+		XLSX.utils.book_append_sheet(wb, ws, "SheetJS");
+		/* generate XLSX file and send to client */
+		XLSX.writeFile(wb, `LH-${moment().format('YYYY年-MM月-DD日 HH:mm:ss')}.xlsx`)
+    
+  }
+  hideDeleteModal = () => {
+    this.setState({
+      isShowArticleModal: false,
+      deleteArticleModalTitle: '',
+      deleteArticleConfirmLoading:false
+    })
+  }
+  deleteArticle = () => {
+    this.setState({
+      deleteArticleConfirmLoading:true
+    })
+    deleteArtileById(this.state.currentDeleteArtileId).then(res=>{
+      message.success(res.data.msg)
+      this.setState({
+        offset: 0
+      }, () => {
+        this.getData()
+      })
+    }).catch(err =>{
+    }).finally(() => {
+      this.setState({
+        deleteArticleConfirmLoading:false,
+        isShowArticleModal:false
+      })
+    })
+  }
   render() {
     return (
       <Card title="文章列表"
        bordered={false}
-       extra={<Button>导出excel</Button>} >
+       extra={<Button onClick={this.toExcel}>导出excel</Button>} >
         <Table 
         rowKey={record => record.id}
         dataSource={this.state.dataSource} 
         columns={this.state.columns}
         pagination={{
+          current:this.state.offset / this.state.limited + 1 ,
           total: this.state.total,
-          hideOnSinglePage: true
+          hideOnSinglePage: true,
+          pageSize:20,
+          showSizeChanger:true,
+          showQuickJumper:true,
+          pageSizeOptions: ['10', '20', '30', '40'],
+          onChange:this.onChangePage,
+          onShowSizeChange:this.onShowSizeChange
         }}
          loading={this.state.isLoading}
          />
+         <Modal
+          title='此操作不可逆,请谨慎'
+          visible={this.state.isShowArticleModal}
+          onCancel={this.hideDeleteModal}
+          maskClosable={false}
+          confirmLoading={this.state.deleteArticleConfirmLoading}
+          onOk={this.deleteArticle}
+         >
+          <Typography>
+            确定删除 <span style={{color:'#f00'}}>
+              {this.state.deleteArticleModalTitle}
+              </span> 吗?
+              </Typography>
+           </Modal>
     </Card>
     );
   }
