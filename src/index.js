@@ -3,9 +3,11 @@ import { render } from 'react-dom'
 import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
 import App from './App'
 import { mainRoutes } from './routes'
-
+import zhCN from 'antd/es/locale/zh_CN'
+import { ConfigProvider } from 'antd'
 import './index.less'
 render(
+  <ConfigProvider locale={zhCN}>
   <Router>
     <Switch>
       <Route path="/admin" render={(routerProps) => {
@@ -23,6 +25,7 @@ render(
       <Redirect to="/admin" from="/" exact />
       <Redirect  to="/404" />
     </Switch>
-  </Router>,
+  </Router>
+  </ConfigProvider>,
   document.querySelector('#root')
 )
