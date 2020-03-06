@@ -7,7 +7,7 @@ import {
   ArticleEdit
 } from '../views'
 
-export const mainRouter = [{
+export const mainRoutes = [{
 pathname: '/login',
 component: Login
 }, {
@@ -15,17 +15,26 @@ component: Login
   component: NotFound
 }]
 
-export const adminRouter = [{
+export const adminRoutes = [{
   pathname:'/admin/dashboard',
-  componemt: Dashboard
-}, {
-  pathname:'/admin/settings',
-  componemt: Settings
+  componemt: Dashboard,
+  title: '仪表盘',
+  isNav:true,
+  icon:'icon-dashboard'
 }, {
   pathname:'/admin/article',
   componemt: ArticleList,
-  ecact:true
+  title: '文章管理',
+  isNav:true,
+  ecact:true,
+  icon:'icon-icon_A'
 }, {
   pathname:'/admin/article/edit/:id',
   componemt: ArticleEdit
+}, {
+  pathname:'/admin/settings',
+  componemt: Settings,
+  title: '设置',
+  isNav:true,
+icon:'icon-setting'
 }]

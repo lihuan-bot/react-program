@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
 import App from './App'
-import { mainRouter } from './routes'
+import { mainRoutes } from './routes'
 
 import './index.less'
 render(
@@ -13,7 +13,7 @@ render(
         return <App {...routerProps}/>
       }}/>
       {
-        mainRouter.map(route =>{
+        mainRoutes.map(route =>{
           return <Route 
                     key={route.pathname} 
                     path={route.pathname} 
