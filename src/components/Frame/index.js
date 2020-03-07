@@ -26,7 +26,7 @@ class Frame extends Component {
       </div>
     </Header>
     <Layout>
-      <Sider width={200} className="site-layout-background">
+      <Sider width={200} className="site-layout-background lh-sider">
         <Menu
           mode="inline"
           selectedKeys={seletedKey.join('/')}
@@ -43,10 +43,10 @@ class Frame extends Component {
             
         </Menu>
       </Sider>
-      <Layout style={{ padding: '16px' }}>
+      <Layout style={{ paddingLeft: '16px'}}>
         
         <Content
-          className="site-layout-background "
+          className="site-layout-background lh-content "
           style={{
             margin: 0,
           }}

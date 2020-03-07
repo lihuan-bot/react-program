@@ -1,8 +1,8 @@
 import React, { Component, createRef } from 'react';
 import E from 'wangeditor' 
 import moment from 'moment'
-import { getArticleById } from '../../netWork'
-import { Card, Button, Form, Input, DatePicker} from 'antd'
+import { getArticleById, saveArticleById } from '../../netWork'
+import { Card, Button, Form, Input, DatePicker, message, Spin} from 'antd'
 import './Edit.less'
 const layout = {
   labelCol: {
@@ -24,10 +24,27 @@ class Edit extends Component {
     super()
     this.editRef = createRef()
     this.formRef = createRef()
+    this.state = {
+      isLoading: false
+    }
   }
   onFinish = values => {
-    console.log('Success:', values);
-
+    const data = Object.assign({},values, {
+      createAt: values.createAt.valueOf()
+    })
+    this.setState({
+      isLoading: true
+    })
+    saveArticleById(this.props.match.params.id,data)
+    .then(res => {
+      message.success(res.data.msg)
+      
+    }).finally(() => {
+      this.setState({
+        isLoading: false
+      })
+      this.props.history.push('/admin/article')
+    })
   };
 
   onFinishFailed = errorInfo => {
@@ -45,6 +62,9 @@ class Edit extends Component {
   }
   componentDidMount() {
    this.initEdit()
+   this.setState({
+     isLoading: true
+   })
    getArticleById(this.props.match.params.id)
    .then(res => {
      const {id, ...data} = res.data
@@ -54,6 +74,10 @@ class Edit extends Component {
    })
    .catch(err => {
      
+   }).finally(() => {
+     this.setState({
+       isLoading:false
+     })
    })
   }
 
@@ -61,8 +85,10 @@ class Edit extends Component {
     
     return (
       <Card title="编辑文章"
+      className="lh-card"
         bordered={false}
-        extra={<Button>取消</Button>} >
+        extra={<Button type="primary" onClick={this.props.history.goBack}>取消</Button>} >
+          <Spin spinning={this.state.isLoading}>
         <Form
           ref={this.formRef}
           {...layout}
@@ -112,7 +138,7 @@ class Edit extends Component {
             <Input placeholder="请输入阅读量"/>
           </Form.Item>
           <Form.Item
-            label="创建时间"
+            label="发布时间"
             name="createAt"
             rules={[
               {
@@ -142,6 +168,7 @@ class Edit extends Component {
         </Button>
           </Form.Item>
         </Form>
+        </Spin>
       </Card>
     );
   }

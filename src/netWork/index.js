@@ -36,3 +36,9 @@ export const deleteArtileById = id => {
 export const getArticleById = id => {
   return service.post(`/api/v1/article/${id}`)
 }
+export const saveArticleById = (id, data)=> {
+  return service.post(`/api/v1/articleEdit/${id}`,data)
+}
+export const getArticleAmount = ()=> {
+  return service.post('/api/v1/articleAmount')
+}
