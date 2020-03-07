@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment'
 import XLSX from 'xlsx'
-import { Card, Tag, Button, Table, Modal, Typography, message} from 'antd'
+import { Card, Tag, Button, Table, Modal, Typography, message, Tooltip} from 'antd'
 import { getArticles, deleteArtileById } from '../../netWork'
 const titleMap = {
   id:'id',
@@ -35,7 +35,9 @@ class Article extends Component {
           key: item,
           render: record => {
             const {amount} = record
-          return <Tag color={amount > 300 ? 'red' : 'green'}>{amount}</Tag>
+          return <Tooltip title={amount > 300 ? '超过300' : '低于300'}>
+            <Tag color={amount > 300 ? 'red' : 'green'}>{amount}</Tag>
+            </Tooltip>
           }
         }
       }
@@ -61,13 +63,16 @@ class Article extends Component {
       render: record =>
            (
           <ButtonGroup>
-            <Button size="small" type="primary" >编辑</Button>
+            <Button size="small" type="primary" onClick={()=>this.toEdit(record.id)}>编辑</Button>
             <Button size="small" type="danger" onClick={() => this.showDeleteArticles(record)}>删除</Button>
           </ButtonGroup>
         )
       
     })
     return columns
+  }
+  toEdit= id => {
+    this.props.history.push(`/admin/article/edit/${id}`)
   }
   showDeleteArticles = (record) => {
     this.setState({

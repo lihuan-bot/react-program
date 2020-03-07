@@ -33,3 +33,6 @@ export const deleteArtileById = id => {
     id
   })
 }
+export const getArticleById = id => {
+  return service.post(`/api/v1/article/${id}`)
+}
