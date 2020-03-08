@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import moment from 'moment'
 import XLSX from 'xlsx'
 import { Card, Tag, Button, Table, Modal, Typography, message, Tooltip} from 'antd'
-import { getArticles, deleteArtileById } from '../../netWork'
+import { getArticles, deleteArtileById } from '../../network'
 const titleMap = {
   id:'id',
   title: '标题',

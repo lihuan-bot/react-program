@@ -1,6 +1,6 @@
 import React, { Component, Fragment, createRef } from 'react';
 import echarts from 'echarts'
-import { getArticleAmount } from '../../netWork'
+import { getArticleAmount } from '../../network'
 import { Card, Row, Col, Spin } from 'antd'
 import './dashboard.less'
 class Dashbodrd extends Component {

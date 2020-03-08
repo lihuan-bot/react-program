@@ -42,3 +42,6 @@ export const saveArticleById = (id, data)=> {
 export const getArticleAmount = ()=> {
   return service.post('/api/v1/articleAmount')
 }
+export const getNotifications = () => {
+  return service.post('/api/v1/notification')
+}

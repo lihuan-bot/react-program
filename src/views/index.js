@@ -9,13 +9,14 @@
 // import ArticleEdit from './Article/Edit'
 
 
-import test from '../lazy'
-const Dashboard=test(()=>import('./Dashboard'))
-const Login=test(()=>import('./Login'))
-const NotFound=test(()=>import('./NotFound'))
-const Settings=test(()=>import('./Settings'))
-const ArticleList=test(()=>import('./Article'))
-const ArticleEdit=test(()=>import('./Article/Edit'))
+import asyncComponent from '../lazy'
+const Dashboard=asyncComponent(()=>import('./Dashboard'))
+const Login=asyncComponent(()=>import('./Login'))
+const NotFound=asyncComponent(()=>import('./NotFound'))
+const Settings=asyncComponent(()=>import('./Settings'))
+const ArticleList=asyncComponent(()=>import('./Article'))
+const ArticleEdit=asyncComponent(()=>import('./Article/Edit'))
+const Notifications=asyncComponent(()=>import('./Notifications'))
 
 // const Dashboard = Loadable({
 //   loader: () => import('./Dashboard'),
@@ -50,5 +51,6 @@ export {
   NotFound,
   Settings,
   ArticleList,
-  ArticleEdit
+  ArticleEdit,
+  Notifications
 }

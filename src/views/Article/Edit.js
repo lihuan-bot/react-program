@@ -1,7 +1,7 @@
 import React, { Component, createRef } from 'react';
 import E from 'wangeditor' 
 import moment from 'moment'
-import { getArticleById, saveArticleById } from '../../netWork'
+import { getArticleById, saveArticleById } from '../../network'
 import { Card, Button, Form, Input, DatePicker, message, Spin} from 'antd'
 import './Edit.less'
 const layout = {
