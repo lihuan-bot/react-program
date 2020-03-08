@@ -4,6 +4,7 @@ import {  createFromIconfontCN, DownOutlined } from '@ant-design/icons';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getAllNotification } from '../../actions/notifications'
+import { logout } from '../../actions/login'
 // import { adminRoutes } from '../../routes'
 import logo from './logo.png'
 import './frame.less'
@@ -15,11 +16,13 @@ const IconFont = createFromIconfontCN({
 
 const mapstate = state => {
   return {
-    notificationsCount:state.notifications.list.filter(item => item.hasRead ===false).length
+    notificationsCount:state.notifications.list.filter(item => item.hasRead ===false).length,
+    avatar: state.login.avatar,
+    displayName: state.login.displayName
   }
 }
 
-@connect(mapstate, { getAllNotification })
+@connect(mapstate, { getAllNotification, logout })
 @withRouter
 class Frame extends Component {
   componentDidMount() {
@@ -30,7 +33,12 @@ class Frame extends Component {
   }
   
   onDropCLick= ({key}) => {
-    this.props.history.push(key)
+    if(key === '/logout') {
+        this.props.logout()
+    }else {
+      this.props.history.push(key)
+    }
+    
   }
    renderMenu = () => (
   <Menu onClick={this.onDropCLick}>
@@ -42,7 +50,7 @@ class Frame extends Component {
     <Menu.Item key="/admin/settings">
         个人设置
     </Menu.Item>
-    <Menu.Item key="/login">
+    <Menu.Item key="/logout">
         退出登录
     </Menu.Item>
   </Menu>
@@ -59,8 +67,8 @@ class Frame extends Component {
       <div>
       <Dropdown overlay={this.renderMenu}>
       <div style={{ cursor:"pointer", display:"flex", alignItems:"center" }} >
-      <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-      <span>欢迎您!李欢欢</span> 
+      <Avatar src={this.props.avatar} />
+    <span>欢迎您!{this.props.displayName}</span> 
       <Badge count={this.props.notificationsCount} offset={[-10, -10]}>
       <DownOutlined />
       </Badge>

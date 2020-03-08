@@ -14,7 +14,6 @@ render(
   <Router>
     <Switch>
       <Route path="/admin" render={(routerProps) => {
-        // TODO: 权限,需要登录
         return <App {...routerProps}/>
       }}/>
       {

@@ -5,7 +5,8 @@ import {
   Settings,
   ArticleList,
   ArticleEdit,
-  Notifications
+  Notifications,
+  NoAuth
 } from '../views'
 
 export const mainRoutes = [{
@@ -35,6 +36,9 @@ export const adminRoutes = [{
 }, {
   pathname:'/admin/notifications',
   componemt: Notifications
+},{
+  pathname:'/admin/noauth',
+  componemt: NoAuth
 },{
   pathname:'/admin/settings',
   componemt: Settings,

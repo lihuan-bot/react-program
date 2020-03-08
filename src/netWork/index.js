@@ -4,6 +4,9 @@ const isDev = process.env.NODE_ENV === "development"
 const service = axios.create({
   baseURL:isDev ? "http://rap2.taobao.org:38080/app/mock/246369" : ""
 })
+const request = axios.create({
+  baseURL:isDev ? "http://rap2.taobao.org:38080/app/mock/246369" : ""
+})
 
 service.interceptors.request.use(  config => {
   config.data = Object.assign({}, config.data, {
@@ -44,4 +47,7 @@ export const getArticleAmount = ()=> {
 }
 export const getNotifications = () => {
   return service.post('/api/v1/notification')
+}
+export const loginRequest = (userInfo) => {
+  return request.post('/api/v1/login',userInfo)
 }

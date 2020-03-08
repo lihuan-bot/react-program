@@ -2,16 +2,20 @@ import actionType from '../actions/actionType'
 const initState = {
   isLoading: false,
   list:[{
-    id:1,
-    title: "Ant Design, a design language for",
-    desc:"111background applications, is refined by Ant UED Team",
+    id:" ",
+    title: "",
+    desc:"",
     hasRead:false,
-  }, {
-    id:2,
-    title: "22Ant Design, a design language for",
-    desc:"222background applications, is refined by Ant UED Team",
-    hasRead:true,
+    avatar:""
   }]
+  // }, 
+  // {
+  //   id:2,
+  //   title: "22Ant Design, a design language for",
+  //   desc:"222background applications, is refined by Ant UED Team",
+  //   hasRead:true,
+  //   avatar:' '
+  // }]
 }
 export default(state = initState, action) => {
   switch(action.type) {
