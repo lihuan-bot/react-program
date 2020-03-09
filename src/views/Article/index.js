@@ -89,26 +89,27 @@ class Article extends Component {
     getArticles(this.state.offset,this.state.limited).then(res => {
       const columnsKeys = Object.keys(res.data.list[0])
       const columns = this.createColumns(columnsKeys)
+      if(!this.updater.isMounted(this))return
       this.setState({
         total:res.total,
         dataSource: res.data.list,
         columns,      
       })
-      
     }).catch(err => {
 
     }).finally(() => {
+      if(!this.updater.isMounted(this))return
       this.setState({
         isLoading:false
       })
     })
   }
-  
   componentDidMount() {
     this.getData()
   }
     
   onChangePage=(page,pageSize) => {
+    if(!this.updater.isMounted(this))return
     this.setState({
       offset: pageSize * (page - 1),
       limited: pageSize
@@ -117,6 +118,7 @@ class Article extends Component {
     })
   }
   onShowSizeChange = (current, size) => {
+    if(!this.updater.isMounted(this))return
     this.setState({
       offset:0,
       limited:size
@@ -145,6 +147,7 @@ class Article extends Component {
     
   }
   hideDeleteModal = () => {
+    if(!this.updater.isMounted(this))return
     this.setState({
       isShowArticleModal: false,
       deleteArticleModalTitle: '',

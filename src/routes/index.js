@@ -22,27 +22,33 @@ export const adminRoutes = [{
   componemt: Dashboard,
   title: '仪表盘',
   isNav:true,
-  icon:'icon-dashboard'
+  icon:'icon-dashboard',
+  roles:["001","002","003"]
 }, {
   pathname:'/admin/article',
   componemt: ArticleList,
   title: '文章管理',
   isNav:true,
   ecact:true,
-  icon:'icon-icon_A'
+  icon:'icon-icon_A',
+  roles:["001","002","003"]
 }, {
   pathname:'/admin/article/edit/:id',
-  componemt: ArticleEdit
+  componemt: ArticleEdit,
+  roles:["001"]
 }, {
   pathname:'/admin/notifications',
-  componemt: Notifications
+  componemt: Notifications,
+  roles:["001","002","003"]
 },{
   pathname:'/admin/noauth',
-  componemt: NoAuth
+  componemt: NoAuth,
+  roles:["001","002","003"]
 },{
   pathname:'/admin/settings',
   componemt: Settings,
   title: '个人设置',
   isNav:true,
-icon:'icon-setting'
+  icon:'icon-setting',
+  roles:["001","002","003"]
 }]

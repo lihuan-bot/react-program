@@ -26,7 +26,8 @@ export default (state= initState, action) => {
             displayName:"",
             avatat:"",
             isLogin:false,
-            isLoading:false
+            isLoading:false,
+            role:''
           }
     default:
       return state

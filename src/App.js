@@ -5,7 +5,8 @@ import { adminRoutes } from './routes'
 import { Frame} from './components'
 const menus = adminRoutes.filter(route => route.isNav ===true)
 const mapState = state => ({
-  isLogin: state.login.isLogin
+  isLogin: state.login.isLogin,
+  role: state.login.role
 })
 @connect(mapState)
 class App extends Component {
@@ -21,7 +22,9 @@ class App extends Component {
               path={route.pathname} 
               exact={route.ecact}
               render={(routerProps) => {
-              return <route.componemt  {...routerProps}/>
+                const hasAuth = route.roles.includes(this.props.role)
+                
+              return hasAuth ? <route.componemt  {...routerProps}/> : <Redirect to="/admin/noauth"/>
             }}/>
           })
         }

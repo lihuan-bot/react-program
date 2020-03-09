@@ -12,6 +12,7 @@ class Dashbodrd extends Component {
     }
   }
   initArticleChart = () =>{
+    if(!this.updater.isMounted(this))return
     this.setState({
       isLoading: true
     })
@@ -38,6 +39,7 @@ class Dashbodrd extends Component {
     };
     this.articleChart.setOption(option)
     }).finally(() => {
+      if(!this.updater.isMounted(this))return
       this.setState({
         isLoading:false
       })
