@@ -18,6 +18,7 @@ const ArticleList=asyncComponent(()=>import('./Article'))
 const ArticleEdit=asyncComponent(()=>import('./Article/Edit'))
 const Notifications=asyncComponent(()=>import('./Notifications'))
 const NoAuth=asyncComponent(()=>import('./NoAuth'))
+const Profile=asyncComponent(()=>import('./Profile'))
 
 // const Dashboard = Loadable({
 //   loader: () => import('./Dashboard'),
@@ -54,5 +55,6 @@ export {
   ArticleList,
   ArticleEdit,
   Notifications,
-  NoAuth
+  NoAuth,
+  Profile
 }

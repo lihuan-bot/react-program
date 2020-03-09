@@ -6,7 +6,8 @@ import {
   ArticleList,
   ArticleEdit,
   Notifications,
-  NoAuth
+  NoAuth,
+  Profile
 } from '../views'
 
 export const mainRoutes = [{
@@ -45,9 +46,13 @@ export const adminRoutes = [{
   componemt: NoAuth,
   roles:["001","002","003"]
 },{
+  pathname:'/admin/profile',
+  componemt: Profile,
+  roles:["001","002","003"]
+},{
   pathname:'/admin/settings',
   componemt: Settings,
-  title: '个人设置',
+  title: '设置',
   isNav:true,
   icon:'icon-setting',
   roles:["001","002","003"]

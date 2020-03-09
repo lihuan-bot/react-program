@@ -11,7 +11,7 @@ import './index.less'
 render(
   <Provider store={store}>
   <ConfigProvider locale={zhCN}>
-  <Router>
+  <Router basename="/lh">
     <Switch>
       <Route path="/admin" render={(routerProps) => {
         return <App {...routerProps}/>

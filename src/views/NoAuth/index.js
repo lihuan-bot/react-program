@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-
+import { Card } from 'antd'
+import './noauth.less'
 class NoAuth extends Component {
   render() {
     return (
-      <div>
+      <Card className="lh-card">
         没有权限
-      </div>
+      </Card>
     );
   }
 }

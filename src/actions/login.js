@@ -23,6 +23,14 @@ const loginFailed = () => {
     type: actionType.LOGIN_FAILED
   }
 }
+export const changeAvatar = avatarUrl => {
+    return {
+      type:actionType.CHANGE_AVATAR,
+      payload: {
+        avatarUrl
+      }
+    }
+}
 export const logout = () => {
   return dispatch => {
     // 实际项目要请求
